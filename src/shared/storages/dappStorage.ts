@@ -11,41 +11,43 @@ type DappStorage = BaseStorage<DappData> & {
 type DappData = DappMeta[];
 
 const serialization = {
-    serialize: data => JSON.stringify(data),
-    deserialize: dataStr => dataStr === '' || !dataStr ? undefined : JSON.parse(dataStr)
-}
+  serialize: data => JSON.stringify(data),
+  deserialize: dataStr => (dataStr === '' || !dataStr ? undefined : JSON.parse(dataStr)),
+};
 
-const storage = __WEBPAGE__ ? createWebStorage<DappData>('Dapp', [], {
-    storageType: WebStorageType.Local,
-    liveUpdate: true, 
-    serialization,
-}) : createStorage<DappData>('Dapp', [], {
-  storageType: StorageType.Local,
-  liveUpdate: true,
-  serialization,
-});
+const storage = __WEBPAGE__
+  ? createWebStorage<DappData>('Dapp', [], {
+      storageType: WebStorageType.Local,
+      liveUpdate: true,
+      serialization,
+    })
+  : createStorage<DappData>('Dapp', [], {
+      storageType: StorageType.Local,
+      liveUpdate: true,
+      serialization,
+    });
 
 const dappStorage: DappStorage = {
   ...storage,
-  isAuthorized: async (url)=>{
+  isAuthorized: async url => {
     const data = await storage.get();
     const index = data.findIndex(d => d.url === url);
     return index === -1 ? false : true;
   },
-  add: async (dapp) => {
+  add: async dapp => {
     const data = await storage.get();
     const index = data.findIndex(d => d.url === dapp.url);
     if (index === -1) {
-        data.push(dapp);
-        await storage.set(data);
+      data.push(dapp);
+      await storage.set(data);
     }
   },
-  remove: async (domain) => {
+  remove: async domain => {
     const data = await storage.get();
     const newData = data.filter(item => item.url !== domain);
     await storage.set(newData);
   },
-  clear: () => storage.set([])
+  clear: () => storage.set([]),
 };
 
 export default dappStorage;

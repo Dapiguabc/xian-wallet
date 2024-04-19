@@ -2,7 +2,7 @@ import { Button, Card, CardFooter, CardHeader, Heading, Stack } from '@chakra-ui
 import { cardStyle } from './cardStyle';
 
 interface Props {
-    next: (num: number) => void;
+  next: (num: number) => void;
 }
 
 const StartCard: React.FC<Props> = ({ next }) => {
@@ -13,8 +13,12 @@ const StartCard: React.FC<Props> = ({ next }) => {
       </CardHeader>
       <CardFooter width="100%">
         <Stack flexGrow={1}>
-          <Button colorScheme="red" onClick={()=> next(1)}>Create a Wallet</Button>
-          <Button colorScheme="blue" onClick={()=> next(5)}>Import a Wallet</Button>
+          <Button colorScheme="red" onClick={() => next(1)}>
+            Create a Wallet
+          </Button>
+          <Button colorScheme="blue" onClick={() => next(5)}>
+            Import a Wallet
+          </Button>
         </Stack>
       </CardFooter>
     </Card>

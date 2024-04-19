@@ -18,28 +18,27 @@ export enum WebStorageType {
 }
 
 export type WebStorageConfig<D = string> = {
+  /**
+   * Assign the {@link StorageType} to use.
+   * @default Local
+   */
+  storageType?: WebStorageType;
+  liveUpdate?: boolean;
+  /**
+   * An optional props for converting values from storage and into it.
+   * @default undefined
+   */
+  serialization?: {
     /**
-     * Assign the {@link StorageType} to use.
-     * @default Local
+     * convert non-native values to string to be saved in storage
      */
-    storageType?: WebStorageType;
-    liveUpdate?: boolean;
+    serialize: (value: D) => string;
     /**
-     * An optional props for converting values from storage and into it.
-     * @default undefined
+     * convert string value from storage to non-native values
      */
-    serialization?: {
-      /**
-       * convert non-native values to string to be saved in storage
-       */
-      serialize: (value: D) => string;
-      /**
-       * convert string value from storage to non-native values
-       */
-      deserialize: (text: string) => D;
-    };
+    deserialize: (text: string) => D;
   };
-
+};
 
 /**
  * Web Storage

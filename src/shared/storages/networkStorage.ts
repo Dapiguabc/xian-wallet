@@ -1,6 +1,6 @@
 import { DefaultNetwork } from '@root/src/constant';
 import { BaseStorage, createStorage, StorageType } from '@src/shared/storages/base';
-import  { createWebStorage, WebStorageType} from '@src/shared/storages/webStorage';
+import { createWebStorage, WebStorageType } from '@src/shared/storages/webStorage';
 import Xian, { Network } from 'xian-js';
 
 type NetworkData = {
@@ -19,21 +19,23 @@ const defaultProfile: NetworkData = {
   networkList: DefaultNetwork,
 };
 
-const storage = __WEBPAGE__? createWebStorage<NetworkData>('Network', defaultProfile, {
-    storageType: WebStorageType.Local,
-    liveUpdate: true, 
-    serialization: {
+const storage = __WEBPAGE__
+  ? createWebStorage<NetworkData>('Network', defaultProfile, {
+      storageType: WebStorageType.Local,
+      liveUpdate: true,
+      serialization: {
         serialize: data => JSON.stringify(data),
-        deserialize: dataStr => dataStr === '' || !dataStr ? undefined : JSON.parse(dataStr)
-    },
-}) : createStorage<NetworkData>('Network', defaultProfile, {
-  storageType: StorageType.Local,
-  liveUpdate: true,
-  serialization: {
-    serialize: data => JSON.stringify(data),
-    deserialize: dataStr => dataStr === '' || !dataStr ? undefined : JSON.parse(dataStr)
-  },
-});
+        deserialize: dataStr => (dataStr === '' || !dataStr ? undefined : JSON.parse(dataStr)),
+      },
+    })
+  : createStorage<NetworkData>('Network', defaultProfile, {
+      storageType: StorageType.Local,
+      liveUpdate: true,
+      serialization: {
+        serialize: data => JSON.stringify(data),
+        deserialize: dataStr => (dataStr === '' || !dataStr ? undefined : JSON.parse(dataStr)),
+      },
+    });
 
 const networkStorage: NetworkStorage = {
   ...storage,
@@ -52,15 +54,14 @@ const networkStorage: NetworkStorage = {
   },
   getCurrentNetwork: async () => {
     const res = await storage.get();
-    const currentNetworkMeta = 
-        res.networkList.find(item => item.chainId === res.currentChainId) ?? res.networkList[0];
+    const currentNetworkMeta = res.networkList.find(item => item.chainId === res.currentChainId) ?? res.networkList[0];
     const currentNetwork = new Xian.Network({
-        chain_id: currentNetworkMeta.chainId,
-        type: 'testnet',
-        masternode_hosts: currentNetworkMeta.masternodeHosts,
+      chain_id: currentNetworkMeta.chainId,
+      type: 'testnet',
+      masternode_hosts: currentNetworkMeta.masternodeHosts,
     });
     return currentNetwork;
-  }
+  },
 };
 
 export default networkStorage;

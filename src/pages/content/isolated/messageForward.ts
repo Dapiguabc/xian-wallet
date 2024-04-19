@@ -5,7 +5,7 @@ refreshOnUpdate('pages/content/isolated/messageForward');
 let port = chrome.runtime.connect({ name: 'xian-background-content-connect' });
 
 port.onDisconnect.addListener(() => {
-    port = null;
+  port = null;
 });
 
 function messageForward() {
@@ -16,7 +16,7 @@ function messageForward() {
         console.log('forward:', e.data);
         e.data.target = undefined;
         if (!port) {
-            port = chrome.runtime.connect({ name: 'xian-background-content-connect' });
+          port = chrome.runtime.connect({ name: 'xian-background-content-connect' });
         }
         port.postMessage(e.data);
       }

@@ -16,54 +16,49 @@ declare interface Window {
   xianNet: XianNet;
 }
 
-
 declare type XianWalletMeta = {
-    sk: string;
-    vk: string;
-    derivationIndex: number;
-    seed: any;
-    mnemonic: any;
-}
-
+  sk: string;
+  vk: string;
+  derivationIndex: number;
+  seed: any;
+  mnemonic: any;
+};
 
 declare type AccountMeta = {
-    publicKey: string;
-    encryptedPrivateKey: string;
-}
-
+  publicKey: string;
+  encryptedPrivateKey: string;
+};
 
 declare type HistoryMeta = {
-    hash: string,
-    contract: string,
-    method: string;
-    kwargs: any;
-    status: "success"| "error";
-    timestamp: number;
-}
-
+  hash: string;
+  contract: string;
+  method: string;
+  kwargs: any;
+  status: 'success' | 'error';
+  timestamp: number;
+};
 
 declare type TokenMeta = {
-    name: string,
-    amount: string,
-    symbol: string,
-    contract: string,
-}
-
+  name: string;
+  amount: string;
+  symbol: string;
+  contract: string;
+};
 
 /*Requests and events*/
 declare type DappMeta = {
-    name?: string;
-    url: string;
-    icon: string;
-}
+  name?: string;
+  url: string;
+  icon: string;
+};
 
-declare type ConnectInfo ={
-    readonly chainId: string;
-    readonly account: string;
-}
+declare type ConnectInfo = {
+  readonly chainId: string;
+  readonly account: string;
+};
 
 declare type CallInfo = {
-    contract: string;
-    method: string;
-    kwargs: any;
-}
+  contract: string;
+  method: string;
+  kwargs: any;
+};

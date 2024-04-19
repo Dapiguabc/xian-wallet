@@ -7,13 +7,15 @@ type ThemeStorage = BaseStorage<Theme> & {
   toggle: () => Promise<void>;
 };
 
-const storage = __WEBPAGE__ ? createWebStorage<Theme>('theme-storage-key', 'light', {
-    storageType: WebStorageType.Local,
-    liveUpdate: true, 
-}) : createStorage<Theme>('theme-storage-key', 'light', {
-  storageType: StorageType.Local,
-  liveUpdate: true,
-});
+const storage = __WEBPAGE__
+  ? createWebStorage<Theme>('theme-storage-key', 'light', {
+      storageType: WebStorageType.Local,
+      liveUpdate: true,
+    })
+  : createStorage<Theme>('theme-storage-key', 'light', {
+      storageType: StorageType.Local,
+      liveUpdate: true,
+    });
 
 const themeStorage: ThemeStorage = {
   ...storage,

@@ -13,9 +13,9 @@ const isWebpage = process.env.__WEBPAGE__ === 'true';
 const isProduction = !isDev;
 
 export default defineConfig({
-    define: {
-        __WEBPAGE__: isWebpage ? 'true' : 'false',
-    },
+  define: {
+    __WEBPAGE__: isWebpage ? 'true' : 'false',
+  },
   resolve: {
     alias: {
       '@root': rootDir,

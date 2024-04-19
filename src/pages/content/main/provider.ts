@@ -4,17 +4,16 @@ import { nanoid } from 'nanoid';
 refreshOnUpdate('pages/content/main/provider');
 
 class ProviderError extends Error {
-    code: number;
-    data?: unknown;
+  code: number;
+  data?: unknown;
 
-    constructor(code: number, message: string, data?: unknown) {
-      super(message); 
-      this.name = "ProviderError"; 
-      this.code = code;
-      this.data = data;
-    }
+  constructor(code: number, message: string, data?: unknown) {
+    super(message);
+    this.name = 'ProviderError';
+    this.code = code;
+    this.data = data;
   }
-
+}
 
 async function request(args: RequestArguments) {
   const msgId = nanoid();
@@ -40,19 +39,19 @@ async function request(args: RequestArguments) {
         e.data.target = undefined;
         e.data.id = undefined;
 
-        if(e.data.type === 'rejected'){
-            reject(new ProviderError(101, 'user rejected the request', e.data.data))
-        } else if(e.data.type === 'unauthorized') {
-            reject(new ProviderError(102, 'account has not been authorized', e.data.data))
-        } else if(e.data.type === 'unsupported') {
-            reject(new ProviderError(103, 'method not supported', e.data.data))
-        } else if(e.data.type === 'disconnected') {
-            reject(new ProviderError(104, 'account disconnect', e.data.data))
-        } else if(e.data.type === 'locked'){ 
-            reject(new ProviderError(106, 'wallet is locked', e.data.data))
-        } else{
-            reslove(e.data.data);
-        } 
+        if (e.data.type === 'rejected') {
+          reject(new ProviderError(101, 'user rejected the request', e.data.data));
+        } else if (e.data.type === 'unauthorized') {
+          reject(new ProviderError(102, 'account has not been authorized', e.data.data));
+        } else if (e.data.type === 'unsupported') {
+          reject(new ProviderError(103, 'method not supported', e.data.data));
+        } else if (e.data.type === 'disconnected') {
+          reject(new ProviderError(104, 'account disconnect', e.data.data));
+        } else if (e.data.type === 'locked') {
+          reject(new ProviderError(106, 'wallet is locked', e.data.data));
+        } else {
+          reslove(e.data.data);
+        }
         // remove the listener
         window.removeEventListener('message', getResponse);
       }
