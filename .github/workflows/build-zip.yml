@@ -23,7 +23,7 @@ jobs:
           path: node_modules
           key: ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.json') }}
 
-      - uses: yarn/action-setup@v2
+      - run: npm install -g yarn
 
       - run: yarn --frozen-lockfile
 
