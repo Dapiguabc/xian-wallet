@@ -8,6 +8,7 @@ export type ICallArgs = {
   contract: string;
   method: string;
   kwargs: any;
+  stampLimit?: number;
 };
 
 const call = async (args: ICallArgs) => {
@@ -23,7 +24,7 @@ const call = async (args: ICallArgs) => {
       contractName: args.contract,
       methodName: args.method,
       kwargs: args.kwargs,
-      stampLimit: 50000,
+      stampLimit: args.stampLimit ?? 50000,
     },
   );
   const txRes = await tx.send(args.privateKey);

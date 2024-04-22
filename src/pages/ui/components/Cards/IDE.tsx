@@ -39,7 +39,7 @@ def test():
     return 'Hello, World!'
 `;
 
-const IDE: React.FC<Props> = ({ back }) => {
+const IDE: React.FC<Props> = ({ next, back }) => {
   const { currentNetwork, currentAccount } = useWallet();
   const [contract, setContract] = useState('');
   const [contractValueErr, setContractValueErr] = useState(false);
@@ -161,7 +161,7 @@ const IDE: React.FC<Props> = ({ back }) => {
           here
         </Link>
         . Deployed Smart Contracts can be directly interacted with by using{' '}
-        <Link color="#007bff" href="#">
+        <Link color="#007bff" onClick={() => next(10)}>
           Advanced Transactions
         </Link>
         .

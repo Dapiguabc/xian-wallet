@@ -16,6 +16,8 @@ import IDE from './components/Cards/IDE';
 import { FaMoon, FaRegSun } from 'react-icons/fa6';
 import Setting from './components/Cards/Settings';
 import networkStorage from '@root/src/shared/storages/networkStorage';
+import ReceiveCard from './components/Cards/ReceiveCard';
+import AdvancedTxCard from './components/Cards/AdvancedTxCard';
 
 refreshOnUpdate('pages/ui');
 
@@ -86,9 +88,13 @@ export default function App() {
       case 6:
         return <AddTokenCard back={back} />;
       case 7:
-        return <IDE back={back} />;
+        return <IDE next={goto} back={() => goto(2)} />;
       case 8:
         return <Setting back={back} />;
+      case 9:
+        return <ReceiveCard back={back} />;
+      case 10:
+        return <AdvancedTxCard back={back} />;
       default:
         return <></>;
     }

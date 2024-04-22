@@ -32,7 +32,7 @@ interface Props {
   back: () => void;
 }
 
-const TokenCard: React.FC<TokenMeta & Props> = ({ name, amount, symbol, next, back }) => {
+const TokenCard: React.FC<TokenMeta & Props> = ({ name, amount, symbol, next }) => {
   return (
     <Box border="1px solid #dee2e6" borderRadius="5px" p="10px">
       <Box mt="5px" mb="15px" fontWeight="bold">
@@ -45,7 +45,7 @@ const TokenCard: React.FC<TokenMeta & Props> = ({ name, amount, symbol, next, ba
         <Button flexBasis="50%" leftIcon={<FaPaperPlane />} onClick={() => next(4)}>
           Send
         </Button>
-        <Button flexBasis="50%" leftIcon={<FaDownload />} onClick={back}>
+        <Button flexBasis="50%" leftIcon={<FaDownload />} onClick={() => next(9)}>
           Receive
         </Button>
       </Flex>
