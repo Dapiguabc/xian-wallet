@@ -50,12 +50,14 @@ const tokenStorage: TokenStorage = {
     const tokenData = lodash.cloneDeep(result);
     const net = await networkStorage.getCurrentNetwork();
     const account = await accountStorage.getCurrentAccount();
-    const res = await net.getVariable(tokenContract, 'balances', account).then(v => v.value.toString());
+    const res = await net.getVariable(tokenContract, 'balances', account).then(v => v.value?.toString());
     if (!tokenData[account]) tokenData[account] = [];
-    tokenData[account]?.forEach(t => {
-      if (t.contract === tokenContract) t.amount = res;
-    });
-    await storage.set(tokenData);
+    if (res) {
+        tokenData[account]?.forEach(t => {
+            if (t.contract === tokenContract) t.amount = res;
+          });
+        await storage.set(tokenData);   
+    }
   },
   refreshAll: async () => {
     const result = await storage.get();
@@ -67,8 +69,8 @@ const tokenStorage: TokenStorage = {
     for (let i = 0; i < tokenData[account].length; i++) {
       const res = await net
         .getVariable(tokenData[account][i].contract, 'balances', account)
-        .then(v => v.value.toString());
-      tokenData[account][i].amount = res;
+        .then(v => v.value?.toString());
+        if (res) tokenData[account][i].amount = res;
     }
     await storage.set(tokenData);
   },

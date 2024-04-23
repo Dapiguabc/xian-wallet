@@ -73,6 +73,7 @@ const IDE: React.FC<Props> = ({ next, back }) => {
         name: contract,
         code: code,
       },
+      stampLimit: stamp,
     };
 
     const res = await helper.call(callArgs);
@@ -198,7 +199,7 @@ const IDE: React.FC<Props> = ({ next, back }) => {
       <CardFooter width="100%" p={0}>
         <Stack flexGrow={1}>
           <Button colorScheme="red" onClick={run} isLoading={loading} isDisabled={disable}>
-            Deploye Contract
+            Submit Contract
           </Button>
           <Button colorScheme="blue" onClick={back}>
             Back

@@ -90,6 +90,7 @@ const AdvancedTxCard: React.FC<Props> = ({ back }) => {
       contract: contract,
       method: method,
       kwargs: kwargs,
+      stampLimit: stamp,
     };
     const res = await helper.call(callArgs);
     return res;
