@@ -16,10 +16,19 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14'  # Change this to your Node.js version if needed
+          node-version: '18.12.0'  # Change this to your Node.js version if needed
 
       - name: Install dependencies
         run: npm install
 
       - name: Build Website
         run: npm run build:website
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist'
+      
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
