@@ -1,4 +1,4 @@
-name: Build And Upload Extension Zip Via Artifact
+name: Build Extension ZIP via Artifact
 
 on:
   push:
@@ -6,29 +6,24 @@ on:
   pull_request:
 
 jobs:
-  build:
-
+  build_and_deploy:
     runs-on: ubuntu-latest
-
+    
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+        
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
         with:
-          node-version-file: ".nvmrc"
+          node-version: '18.12.0'  # Change this to your Node.js version if needed
 
-      - uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.json') }}
-
-      - run: npm install -g yarn
-
-      - run: yarn
-
-      - run: yarn build
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Build Website
+        run: npm run build
 
       - uses: actions/upload-artifact@v3
         with:
-          path: dist/*
+          path: build/*
