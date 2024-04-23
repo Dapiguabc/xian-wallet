@@ -34,7 +34,7 @@ jobs:
         run: npm run build:website
 
       - name: Create custom index.html for auto redirect to wallet
-        run: echo "<meta http-equiv=\"refresh\" content=\"0;url=./src/pages/ui/index.html\">" > ./build/index.html
+        run: echo "<meta http-equiv=\"refresh\" content=\"0;url=./src/pages/ui/index.html\">" > ./dist/index.html
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
