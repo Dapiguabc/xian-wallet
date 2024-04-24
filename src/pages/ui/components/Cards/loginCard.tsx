@@ -47,12 +47,8 @@ const LoginCard: React.FC<Props> = ({ next }) => {
   };
 
   const remove = async () => {
-    const encryptedPrivateKey = await accountStorage.getCurrentAccountVK(passwordValue);
-    if (encryptedPrivateKey) {
-      // remove accounts
-      accountStorage.clear();
-      // update login state
-      dispatch({
+    accountStorage.clear();
+    dispatch({
         type: 'update',
         payload: {
           isLogin: false,
@@ -60,9 +56,6 @@ const LoginCard: React.FC<Props> = ({ next }) => {
           isFirst: true,
         },
       });
-    } else {
-      setErrMsg('Incorrect password!');
-    }
   };
 
   return (

@@ -54,6 +54,7 @@ const SendCard: React.FC<Props> = ({ back }) => {
         to: receiver,
         amount: amount,
       },
+      stampLimit: 100,
     };
     const res = await helper.call(callArgs);
     return res;
@@ -137,11 +138,11 @@ const SendCard: React.FC<Props> = ({ back }) => {
           <AlertIcon />
           <AlertTitle>{errMsg}</AlertTitle>
         </Alert>
-        <Box>
+        <Box my="10px">
           <Text mb="8px">To Address</Text>
           <Input value={receiver} onChange={handleReceiverChange} placeholder="Enter the wallet address" size="sm" />
         </Box>
-        <Box>
+        <Box my="10px">
           <Text mb="8px">Token Amount</Text>
           <Input
             value={amount}
