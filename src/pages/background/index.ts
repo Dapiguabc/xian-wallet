@@ -1,5 +1,4 @@
 import reloadOnUpdate from 'virtual:reload-on-update-in-background-script';
-import 'webextension-polyfill';
 import initProflie from './init';
 import handler from './handler';
 

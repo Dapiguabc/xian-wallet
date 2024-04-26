@@ -10,7 +10,6 @@ import { useLoginContext } from './context/loginContext';
 import LoginCard from './components/Cards/loginCard';
 import SendCard from './components/Cards/SendCard';
 import ImportWalletCard from './components/Cards/ImportWalletCard';
-import handler from './webMsgHandler';
 import AddTokenCard from './components/Cards/AddTokenCard';
 import IDE from './components/Cards/IDE';
 import { FaMoon, FaRegSun } from 'react-icons/fa6';
@@ -33,19 +32,6 @@ export default function App() {
     const res = await currentNetwork.ping();
     setIsOnline(res);
   };
-
-  useEffect(() => {
-    // for webpage
-    if (__WEBPAGE__) {
-      const handlerWithPassword = async (e: MessageEvent) => {
-        await handler(state.password, e);
-      };
-      window.addEventListener('message', handlerWithPassword, false);
-      return () => {
-        window.removeEventListener('message', handlerWithPassword);
-      };
-    }
-  }, [state.password]);
 
   // check node status
   useEffect(() => {

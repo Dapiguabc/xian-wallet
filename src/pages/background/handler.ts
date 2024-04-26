@@ -3,45 +3,44 @@ import reloadOnUpdate from 'virtual:reload-on-update-in-background-script';
 
 reloadOnUpdate('pages/background');
 
+const wrapAsyncFunction = (listener) => (msg: any, sender: chrome.runtime.MessageSender, sendResponse: (response?: any) => void) => {
+    Promise.resolve(listener(msg, sender)).then(sendResponse);
+    return true; 
+};
+
 export default function handler() {
   let password: string = '';
   // for contentjs
-  chrome.runtime.onConnect.addListener(function (port) {
-    console.log('port conn ready');
-    if (port.name === 'xian-background-content-connect') {
-      port.onMessage.addListener(async function (msg) {
-        console.log('background receive: ', msg);
+  chrome.runtime.onMessage.addListener(wrapAsyncFunction( async (msg: any, sender: chrome.runtime.MessageSender) => {
+    console.log('background receive: ', msg, 'from:', sender);
 
-        if (password === '') {
-          requestHandlers.lockedHandle(port, msg.id);
-        }
-        const { method } = msg.data;
-        if (method === 'connect') {
-          await requestHandlers.connectRequestHandle(
-            {
-              url: new URL(port.sender.origin).host,
-              icon: port.sender.tab.favIconUrl,
-            },
-            port,
-            msg.id,
-          );
-        } else if (method === 'call') {
-          await requestHandlers.callRequestHandle(msg.data.params, password, port, msg.id);
-        } else {
-          requestHandlers.unsupportedHandle(port, msg.id);
-        }
-      });
-    } else if (port.name === 'xian-background-page-connect') {
-      // for background page
-      port.onMessage.addListener(async msg => {
-        const { method } = msg;
-        if (method === 'sign') {
-          // to do: verify the password
-          password = msg.data;
-        } else if (method === 'signOut') {
-          password = undefined;
-        }
-      });
+    const { method } = msg.data;
+
+    if (method === 'sign') {
+        // to do: verify the password
+        password = msg.data;
+        return true;
+    } else if (method === 'signOut') {
+        password = undefined;
+        return true;
+    } 
+
+    if (password === '') {
+        return requestHandlers.lockedHandle(msg.id);
     }
-  });
+
+    if (method === 'connect') {
+      return await requestHandlers.connectRequestHandle(
+        {
+          url: new URL(sender.origin).host,
+          icon: sender.tab.favIconUrl,
+        },
+        msg.id,
+      );
+    } else if (method === 'call') {
+      return await requestHandlers.callRequestHandle(msg.data.params, password, msg.id);
+    } else {
+      return  requestHandlers.unsupportedHandle(msg.id);
+    }
+  }));
 }

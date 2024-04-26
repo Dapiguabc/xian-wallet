@@ -41,7 +41,7 @@ const connectRequestHandle = async (dapp: DappMeta, messenger: Messenger, msgId?
   // }
 };
 
-const callRequestHandle = async (args: CallInfo, password: string, messenger: Messenger, msgId?: string) => {
+const callRequestHandle = async (args: CallInfo, password: string, msgId?: string) => {
   const network = await networkStorage.get();
   const chainId = network.currentChainId;
   const account = await accountStorage.getCurrentAccount();
@@ -59,17 +59,17 @@ const callRequestHandle = async (args: CallInfo, password: string, messenger: Me
   };
   const res = await helper.call(callArgs);
   // event
-  messenger.postMessage({ type: 'call', data: res, id: msgId });
+  return { type: 'call', data: res, id: msgId };
 };
 
-const unsupportedHandle = (messenger: Messenger, msgId?: string) => {
+const unsupportedHandle = (msgId?: string) => {
   // event
-  messenger.postMessage({ type: 'unsupported', id: msgId });
+  return { type: 'unsupported', id: msgId };
 };
 
-const lockedHandle = (messenger: Messenger, msgId?: string) => {
+const lockedHandle = (msgId?: string) => {
   // event
-  messenger.postMessage({ type: 'locked', id: msgId });
+  return { type: 'locked', id: msgId };
 };
 
 export default { connectRequestHandle, callRequestHandle, unsupportedHandle, lockedHandle };
