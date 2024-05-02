@@ -2,16 +2,6 @@
 import accountStorage from '@root/src/shared/storages/accountStorage';
 import { PropsWithChildren, createContext, useContext, Dispatch, useReducer, useCallback, useEffect } from 'react';
 
-let port;
-
-if (!__WEBPAGE__) {
-  port = chrome.runtime.connect({ name: 'xian-background-page-connect' });
-
-  port.onDisconnect.addListener(() => {
-    port = chrome.runtime.connect({ name: 'xian-background-page-connect' });
-  });
-}
-
 interface ILogin {
   password: string | undefined;
   isLogin: boolean;
@@ -53,7 +43,7 @@ export const ReducerContextProvider: React.FC<PropsWithChildren> = props => {
         case 'update':
           if (!__WEBPAGE__) {
             if (payload.password) {
-              port.postMessage({ method: 'sign', data: payload.password });
+              chrome.runtime.sendMessage({ method: 'sign', data: payload.password });
             }
           }
           return {
@@ -62,7 +52,7 @@ export const ReducerContextProvider: React.FC<PropsWithChildren> = props => {
           };
         case 'signOut':
           if (!__WEBPAGE__) {
-            port.postMessage({ method: 'signout' });
+            chrome.runtime.sendMessage({ method: 'signout' });
           }
           return {
             ...preState,

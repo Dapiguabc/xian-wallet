@@ -23,7 +23,7 @@ export default function handler() {
     } else if (method === 'signOut') {
         password = undefined;
         return true;
-    } 
+    }
 
     if (password === '') {
         return requestHandlers.lockedHandle(msg.id);
