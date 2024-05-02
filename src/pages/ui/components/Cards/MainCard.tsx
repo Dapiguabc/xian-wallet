@@ -3,6 +3,7 @@ import {
   Button,
   Card,
   CardBody,
+  CardFooter,
   CardHeader,
   Flex,
   Heading,
@@ -17,7 +18,7 @@ import {
   useClipboard,
   useToast,
 } from '@chakra-ui/react';
-import { AddIcon, DeleteIcon } from '@chakra-ui/icons';
+import { AddIcon, DeleteIcon, RepeatIcon } from '@chakra-ui/icons';
 import { cardStyle } from './cardStyle';
 import { useEffect } from 'react';
 import useWallet from '@root/src/shared/hooks/useWallet';
@@ -189,6 +190,18 @@ const MainCard: React.FC<Props> = ({ next, back }) => {
           </TabPanels>
         </Tabs>
       </CardBody>
+      <CardFooter p='0' width='100%'>
+        <IconButton
+            onClick={() => tokenStorage.refreshAll()}
+            variant="link"
+            color="#007bff"
+            aria-label="refresh"
+            isRound={true}
+            justifyContent='flex-start'
+            size="lg"
+            icon={<RepeatIcon />}
+        />
+      </CardFooter>
     </Card>
   );
 };

@@ -1,5 +1,6 @@
 import historyStorage from '@root/src/shared/storages/historyStorage';
 import Xian from 'xian-js';
+import tokenStorage from './shared/storages/tokenStorage';
 
 export type ICallArgs = {
   network: NetworkMeta;
@@ -36,6 +37,7 @@ const call = async (args: ICallArgs) => {
     status: txRes.success ? 'success' : 'error',
     timestamp: new Date().getTime(),
   });
+  tokenStorage.refreshAll();
   return txRes;
 };
 
