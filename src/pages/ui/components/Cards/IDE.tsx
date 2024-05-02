@@ -18,6 +18,7 @@ import {
 import { cardStyle } from './cardStyle';
 import { useCallback, useEffect, useState } from 'react';
 import CodeMirror from '@uiw/react-codemirror';
+import { EditorView } from '@codemirror/view';
 import { python } from '@codemirror/lang-python';
 import helper, { ICallArgs } from '@root/src/helper';
 import useWallet from '@root/src/shared/hooks/useWallet';
@@ -170,8 +171,8 @@ const IDE: React.FC<Props> = ({ next, back }) => {
           <AlertIcon />
           <AlertTitle>{errMsg}</AlertTitle>
         </Alert>
-        <Box my="10px">
-          <CodeMirror onChange={onChange} theme="dark" value={code} height="200px" extensions={[python()]} />
+        <Box my="10px" maxW='100%'>
+          <CodeMirror maxWidth='100%' onChange={onChange} theme="dark" value={code} height="200px" extensions={[python(), EditorView.lineWrapping]} />
         </Box>
         <Box mb="10px">
           <Text mb="8px">Contract Name</Text>
