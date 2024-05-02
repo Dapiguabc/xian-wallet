@@ -35,7 +35,7 @@ interface Props {
 
 const TokenCard: React.FC<TokenMeta & Props> = ({ name, amount, symbol, next }) => {
   return (
-    <Box border="1px solid #dee2e6" borderRadius="5px" p="10px">
+    <Box border="1px solid var(--card-border-color)" borderRadius="5px" p="10px">
       <Box mt="5px" mb="15px" fontWeight="bold">
         {name} ({symbol})
       </Box>
@@ -57,7 +57,7 @@ const TokenCard: React.FC<TokenMeta & Props> = ({ name, amount, symbol, next }) 
 const HistoryCard: React.FC<HistoryMeta> = props => {
   const { hash, contract, method, status, timestamp } = props;
   return (
-    <Box border="1px solid #dee2e6" borderRadius="5px" p="10px">
+    <Box border="1px solid var(--card-border-color)" borderRadius="5px" p="10px">
       <Box textOverflow="ellipsis" whiteSpace="nowrap" overflow="hidden">
         {hash}
       </Box>

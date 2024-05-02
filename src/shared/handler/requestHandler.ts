@@ -3,11 +3,7 @@ import accountStorage from '../storages/accountStorage';
 import networkStorage from '../storages/networkStorage';
 import helper, { ICallArgs } from '@root/src/helper';
 
-type Messenger = {
-  postMessage: (message: any) => void;
-};
-
-const connectRequestHandle = async (dapp: DappMeta, messenger: Messenger, msgId?: string) => {
+const connectRequestHandle = async (dapp: DappMeta, msgId?: string) => {
   //const isAuthorized = await dappStorage.isAuthorized(dapp.url);
   const chainId = await networkStorage.getCurrentChainId();
   const account = await accountStorage.getCurrentAccount();
@@ -17,8 +13,7 @@ const connectRequestHandle = async (dapp: DappMeta, messenger: Messenger, msgId?
     chainId: chainId,
     account: account,
   };
-  // event
-  messenger.postMessage({ type: 'connect', data: data, id: msgId });
+  return { type: 'connect', data: data, id: msgId };
 
   // // return connection info if already authorized
   // if (isAuthorized) {

@@ -98,7 +98,7 @@ const AddNetworkCard: React.FC<Props> = ({ back }) => {
           <Input value={url} onChange={handleUrlChange} placeholder="Enter the masternode url" size="sm" />
         </Box>
       </CardBody>
-      <CardFooter width="100%" p='0'>
+      <CardFooter width="100%" p='0' mt='10px'>
         <Stack flexGrow={1}>
           <Button colorScheme="red" isDisabled={disable} onClick={add}>
             Add

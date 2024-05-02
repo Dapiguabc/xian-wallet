@@ -18,7 +18,7 @@ export default function handler() {
 
     if (method === 'sign') {
         // to do: verify the password
-        password = msg.data;
+        password = msg.data.data;
         return true;
     } else if (method === 'signOut') {
         password = undefined;
