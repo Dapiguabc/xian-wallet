@@ -22,7 +22,7 @@ import { AddIcon, DeleteIcon, RepeatIcon } from '@chakra-ui/icons';
 import { cardStyle } from './cardStyle';
 import { useEffect } from 'react';
 import useWallet from '@root/src/shared/hooks/useWallet';
-import { FaPaperPlane, FaDownload, FaRegFileCode, FaGear } from 'react-icons/fa6';
+import { FaPaperPlane, FaDownload, FaRegFileCode, FaGear, FaRotateRight} from 'react-icons/fa6';
 import historyStorage from '@root/src/shared/storages/historyStorage';
 import helper from '../../../../helper';
 import useStorage from '@root/src/shared/hooks/useStorage';
@@ -33,12 +33,38 @@ interface Props {
   back: () => void;
 }
 
-const TokenCard: React.FC<TokenMeta & Props> = ({ name, amount, symbol, next }) => {
+const TokenCard: React.FC<TokenMeta & Props> = ({ contract, name, amount, symbol, next }) => {
   return (
-    <Box border="1px solid var(--card-border-color)" borderRadius="5px" p="10px">
-      <Box mt="5px" mb="15px" fontWeight="bold">
-        {name} ({symbol})
-      </Box>
+    <Box border="1px solid var(--card-border-color)" borderRadius="5px" p="10px" mb='10px'>
+      <Flex mt="5px" mb="15px" fontWeight="bold" alignItems='center'>
+        {name} ({symbol})         
+            <IconButton
+            onClick={() => tokenStorage.refresh(contract)}
+            variant="link"
+            color="#007bff"
+            aria-label="refresh"
+            isRound={true}
+            justifyContent='flex-start'
+            size="md"
+            minW='10px'
+            ml='10px'
+            icon={<FaRotateRight />}
+            />
+            {
+                contract === 'currency' ? <></> : <IconButton
+                onClick={() => tokenStorage.delete(contract)}
+                variant="link"
+                color="#007bff"
+                aria-label="refresh"
+                isRound={true}
+                justifyContent='flex-start'
+                size="md"
+                minW='10px'
+                ml='10px'
+                icon={<DeleteIcon />}
+                />
+            }
+      </Flex>
       <Box mt="5px" mb="15px">
         {amount}
       </Box>
@@ -150,8 +176,9 @@ const MainCard: React.FC<Props> = ({ next, back }) => {
             <TabPanel p={0}>
               <Box mb="20px" textAlign="center">
                 <Text display="inline-block" textAlign="center" fontSize="xl" fontWeight="bold">
-                  Tokens
+                  Tokens 
                 </Text>
+
                 <IconButton
                   onClick={() => next(6)}
                   float="right"

@@ -15,6 +15,7 @@ type TokenStorage = BaseStorage<TokenData> & {
     success: boolean;
     message: string;
   }>;
+  delete: (tokenContract: string) => Promise<void>;
 };
 
 const storage = __WEBPAGE__
@@ -128,6 +129,13 @@ const tokenStorage: TokenStorage = {
       message: 'Token already added!',
     };
   },
+  delete: async (contract) => {
+    const res = await storage.get();
+    const tokenData = lodash.cloneDeep(res);
+    const account = await accountStorage.getCurrentAccount();
+    tokenData[account] = tokenData[account].filter(r => r.contract !== contract);
+    await storage.set(tokenData);
+  }
 };
 
 export default tokenStorage;
