@@ -43,7 +43,7 @@ export const ReducerContextProvider: React.FC<PropsWithChildren> = props => {
         case 'update':
           if (!__WEBPAGE__) {
             if (payload.password) {
-              chrome.runtime.sendMessage({ method: 'sign', data: payload.password });
+              chrome.runtime.sendMessage({data:{ method: 'sign', data: payload.password }});
             }
           }
           return {
@@ -52,7 +52,7 @@ export const ReducerContextProvider: React.FC<PropsWithChildren> = props => {
           };
         case 'signOut':
           if (!__WEBPAGE__) {
-            chrome.runtime.sendMessage({ method: 'signout' });
+            chrome.runtime.sendMessage({data:{ method: 'signout' }});
           }
           return {
             ...preState,

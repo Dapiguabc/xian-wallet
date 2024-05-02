@@ -10,7 +10,7 @@ interface Props {
   back: () => void;
 }
 
-const Setting: React.FC<Props> = ({ back, next }) => {
+const Setting: React.FC<Props> = ({ next }) => {
   const { state } = useLoginContext();
   const [url, setUrl] = useState('');
   const [disableEdit, setDisableEdit] = useState(true);
@@ -59,7 +59,7 @@ const Setting: React.FC<Props> = ({ back, next }) => {
           <Button colorScheme="purple" isDisabled={disableEdit} onClick={() => next(12)}>
             Edit Custom Network
           </Button>
-          <Button colorScheme="blue" onClick={back}>
+          <Button colorScheme="blue" onClick={() => next(2)}>
             Back
           </Button>
         </Stack>

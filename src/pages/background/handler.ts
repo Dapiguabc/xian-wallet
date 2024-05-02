@@ -23,6 +23,8 @@ export default function handler() {
     } else if (method === 'signOut') {
         password = undefined;
         return true;
+    } else if (method === 'isLogin') {
+        return password;
     }
 
     if (password === '') {

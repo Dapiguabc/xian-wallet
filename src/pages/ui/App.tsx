@@ -27,7 +27,7 @@ export default function App() {
   const [isOnline, setIsOnline] = useState(false);
   const [step, setStep] = useState(0);
   const [prevStep, setPrevStep] = useState(0);
-  const { state } = useLoginContext();
+  const { state, dispatch} = useLoginContext();
   const { colorMode, toggleColorMode } = useColorMode();
 
   const checkNodeStatus = async () => {
@@ -51,7 +51,24 @@ export default function App() {
         goto(3);
       }
     }
-  }, [state.isFirst]);
+  }, [state]);
+
+  useEffect(() => {
+    if (!__WEBPAGE__) {
+        chrome.runtime.sendMessage({data: { method: 'isLogin'}}).then(r => {
+            if(r !== '') {
+                dispatch({
+                    type: 'update',
+                    payload: {
+                      isFirst: false,
+                      password: r,
+                      isLogin: true,
+                    },
+                });
+            }
+        });
+    }
+  }, [])
 
   const goto = (num: number) => {
     setPrevStep(step);
