@@ -3,14 +3,17 @@ import { cardStyle } from './cardStyle';
 import accountStorage from '@root/src/shared/storages/accountStorage';
 import { useEffect, useState } from 'react';
 import { useLoginContext } from '../../context/loginContext';
+import networkStorage from '@root/src/shared/storages/networkStorage';
 
 interface Props {
+  next: (num: number) => void;
   back: () => void;
 }
 
-const Setting: React.FC<Props> = ({ back }) => {
+const Setting: React.FC<Props> = ({ back, next }) => {
   const { state } = useLoginContext();
   const [url, setUrl] = useState('');
+  const [disableEdit, setDisableEdit] = useState(true);
 
   const makeTextFile = async function () {
     const privateKey = await accountStorage.getCurrentAccountVK(state.password);
@@ -22,6 +25,16 @@ const Setting: React.FC<Props> = ({ back }) => {
   useEffect(() => {
     makeTextFile();
   }, [state.password]);
+
+  useEffect(() => {
+    networkStorage.getCustomNetwork().then(r => {
+        if (r && r.length > 0) {
+            setDisableEdit(false);
+        } else {
+            setDisableEdit(true);
+        }
+    });
+  }, []); 
 
   return (
     <Card {...cardStyle}>
@@ -40,6 +53,12 @@ const Setting: React.FC<Props> = ({ back }) => {
       </CardBody>
       <CardFooter width="100%" p={0}>
         <Stack flexGrow={1}>
+          <Button colorScheme="red" onClick={() => next(11)}>
+            Add Custom Network
+          </Button>
+          <Button colorScheme="purple" isDisabled={disableEdit} onClick={() => next(12)}>
+            Edit Custom Network
+          </Button>
           <Button colorScheme="blue" onClick={back}>
             Back
           </Button>

@@ -17,6 +17,8 @@ import Setting from './components/Cards/Settings';
 import networkStorage from '@root/src/shared/storages/networkStorage';
 import ReceiveCard from './components/Cards/ReceiveCard';
 import AdvancedTxCard from './components/Cards/AdvancedTxCard';
+import AddNetworkCard from './components/Cards/AddNetworkCard';
+import EditNetworkCard from './components/Cards/EditNetworkCard';
 
 refreshOnUpdate('pages/ui');
 
@@ -76,11 +78,15 @@ export default function App() {
       case 7:
         return <IDE next={goto} back={() => goto(2)} />;
       case 8:
-        return <Setting back={back} />;
+        return <Setting back={back} next={goto} />;
       case 9:
         return <ReceiveCard back={back} />;
       case 10:
         return <AdvancedTxCard back={back} />;
+      case 11:
+        return <AddNetworkCard back={back} />;
+      case 12:
+        return <EditNetworkCard back={back} />;
       default:
         return <></>;
     }

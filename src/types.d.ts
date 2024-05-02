@@ -1,6 +1,7 @@
 declare type NetworkMeta = {
   chainId: string;
   masternodeHosts: string[];
+  isCustom?: boolean;
 };
 
 declare interface RequestArguments {
