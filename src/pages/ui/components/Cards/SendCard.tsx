@@ -65,9 +65,10 @@ const SendCard: React.FC<Props> = ({ back }) => {
   });
 
   useEffect(() => {
+    console.log(receiver);
     setDisable(true);
     // verify address
-    const pattern = /[0-9a-fA-F]{64}$/;
+    const pattern = /^[0-9a-fA-F]{64}$/;
     if (!pattern.test(receiver) && receiver !== '') {
       setErrMsg('Invalid recipient address!');
       return;
