@@ -5980,7 +5980,7 @@ npm-user-validate@^2.0.0:
   integrity sha512-sSWeqAYJ2dUPStJB+AEj0DyLRltr/f6YNcvCA7phkB8/RMLMnVsQ41GMwHo/ERZLYNDsyB2wPm7pZo1mqPOl7Q==
 
 npm@^10.4.0:
-  version "10.5.2"
+  version "20.5.0"
   resolved "https://registry.npmjs.org/npm/-/npm-10.5.2.tgz"
   integrity sha512-cHVG7QEJwJdZyOrK0dKX5uf3R5Fd0E8AcmSES1jLtO52UT1enUKZ96Onw/xwq4CbrTZEnDuu2Vf9kCQh/Sd12w==
   dependencies:
